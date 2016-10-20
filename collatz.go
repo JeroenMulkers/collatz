@@ -12,6 +12,7 @@ var (
 
 func init() {
 	Lut[0] = End
+	Lut[1] = One
 }
 
 type Node struct {
