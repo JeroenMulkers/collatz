@@ -27,6 +27,9 @@ func NewNode(value int) *Node {
 	if value < 1 {
 		return End
 	}
+	if n, exists := Lut[value]; exists {
+		return n
+	}
 	n := &Node{value, nil, nil, nil, -1}
 	// attach to the existing tree
 	Lut[value] = n
