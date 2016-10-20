@@ -21,6 +21,13 @@ func (n *Node) Order() int {
 }
 
 func (n *Node) Down() *Node {
+	if n.down == nil {
+		if n.value%2 == 0 {
+			n.down = &Node{n.value / 2, nil, n, nil, -1}
+		} else {
+			n.down = &Node{3*n.value + 1, nil, nil, n, -1}
+		}
+	}
 	return n.down
 }
 
