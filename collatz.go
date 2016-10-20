@@ -12,6 +12,10 @@ type Node struct {
 	order int
 }
 
+func NewNode(value int) *Node {
+	return &Node{value, nil, nil, nil, -1}
+}
+
 func (n *Node) Value() int {
 	return n.value
 }
