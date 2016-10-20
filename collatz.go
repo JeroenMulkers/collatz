@@ -18,6 +18,9 @@ type Node struct {
 }
 
 func NewNode(value int) *Node {
+	if value < 1 {
+		return End
+	}
 	n := &Node{value, nil, nil, nil, -1}
 	Lut[value] = n
 	if n.value != 0 {
