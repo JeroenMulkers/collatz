@@ -21,6 +21,13 @@ func (n *Node) Value() int {
 }
 
 func (n *Node) Order() int {
+	if n.order == -1 {
+		if n.value == 1 {
+			n.order = 1
+		} else { // Go down to determine order (~recursive)
+			n.order = n.Down().Order() + 1
+		}
+	}
 	return n.order
 }
 
