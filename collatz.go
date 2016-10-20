@@ -20,6 +20,26 @@ func (n *Node) Value() int {
 	return n.value
 }
 
+func (n *Node) leftValue() int {
+	return n.value * 2
+}
+
+func (n *Node) downValue() int {
+	if n.value%2 == 0 {
+		return n.value / 2
+	} else {
+		return 3*n.value + 1
+	}
+}
+
+func (n *Node) rightValue() int {
+	if ((n.value - 1) % 3) == 0 {
+		return (n.value - 1) / 3
+	} else {
+		return -1
+	}
+}
+
 func (n *Node) Order() int {
 	if n.order == -1 {
 		if n.value == 1 {
@@ -34,9 +54,9 @@ func (n *Node) Order() int {
 func (n *Node) Down() *Node {
 	if n.down == nil {
 		if n.value%2 == 0 {
-			n.down = &Node{n.value / 2, nil, n, nil, -1}
+			n.down = &Node{n.downValue(), nil, n, nil, -1}
 		} else {
-			n.down = &Node{3*n.value + 1, nil, nil, n, -1}
+			n.down = &Node{n.downValue(), nil, nil, n, -1}
 		}
 	}
 	return n.down
@@ -44,14 +64,14 @@ func (n *Node) Down() *Node {
 
 func (n *Node) Left() *Node {
 	if n.left == nil {
-		n.left = &Node{2 * n.value, n, nil, nil, n.order + 1}
+		n.left = &Node{n.leftValue(), n, nil, nil, n.order + 1}
 	}
 	return n.left
 }
 
 func (n *Node) Right() *Node {
 	if n.left == nil && ((n.value-1)%3) == 0 {
-		n.right = &Node{(n.value - 1) / 3, n, nil, nil, n.order + 1}
+		n.right = &Node{n.rightValue(), n, nil, nil, n.order + 1}
 	}
 	return n.right
 }
