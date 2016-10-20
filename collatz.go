@@ -1,14 +1,12 @@
 package collatz
 
 var (
-	Tree = &Node{1, nil, nil, nil, 0}
-	End  = &Node{0, nil, nil, nil, 0}
-	Lut  = make(map[int]*Node)
+	End = &Node{0, nil, nil, nil, 0}
+	Lut = make(map[int]*Node)
 )
 
 func init() {
 	Lut[0] = End
-	Lut[1] = Tree
 }
 
 type Node struct {
