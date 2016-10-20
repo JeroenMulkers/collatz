@@ -1,5 +1,9 @@
 package collatz
 
+/*
+   Basic structure of the Collatz tree which will be build at the fly
+*/
+
 var (
 	End = &Node{0, nil, nil, nil, 0}
 	Lut = make(map[int]*Node)
@@ -17,31 +21,32 @@ type Node struct {
 	order int
 }
 
+// Create new node and attach to the existing tree
 func NewNode(value int) *Node {
 	if value < 1 {
 		return End
 	}
 	n := &Node{value, nil, nil, nil, -1}
+	// attach to the existing tree
 	Lut[value] = n
 	if n.value != 0 {
 		n.left, _ = Lut[n.leftValue()]
 		n.right, _ = Lut[n.rightValue()]
 		n.down, _ = Lut[n.downValue()]
 	}
-	if n.down != nil {
-		n.order = n.down.Order() + 1
+	// add order only if order of down node is known
+	if n.down != nil && n.down.order != -1 {
+		n.order = n.down.order + 1
 	}
 	return n
 }
 
+// Return the value of the node
 func (n *Node) Value() int {
 	return n.value
 }
 
-func (n *Node) leftValue() int {
-	return n.value * 2
-}
-
+// Return the value of the down node
 func (n *Node) downValue() int {
 	if n.value%2 == 0 {
 		return n.value / 2
@@ -50,6 +55,12 @@ func (n *Node) downValue() int {
 	}
 }
 
+// Return the value of the left node
+func (n *Node) leftValue() int {
+	return n.value * 2
+}
+
+// Return the value of the down node
 func (n *Node) rightValue() int {
 	if ((n.value - 1) % 3) == 0 {
 		return (n.value - 1) / 3
@@ -58,6 +69,7 @@ func (n *Node) rightValue() int {
 	}
 }
 
+// Return the order of the node, go down if necessary
 func (n *Node) Order() int {
 	if n.order == -1 {
 		if n.value == 1 {
@@ -69,6 +81,7 @@ func (n *Node) Order() int {
 	return n.order
 }
 
+// Return the node below (create if it does not exist)
 func (n *Node) Down() *Node {
 	if n.down == nil {
 		n.down = NewNode(n.downValue())
@@ -76,6 +89,7 @@ func (n *Node) Down() *Node {
 	return n.down
 }
 
+// Return the left node (create if it does not exist)
 func (n *Node) Left() *Node {
 	if n.left == nil {
 		n.left = NewNode(n.leftValue())
@@ -83,6 +97,7 @@ func (n *Node) Left() *Node {
 	return n.left
 }
 
+// Return the right node (create if it does not exist)
 func (n *Node) Right() *Node {
 	if n.right == nil {
 		n.right = NewNode(n.rightValue())
