@@ -34,11 +34,9 @@ func NewNode(value int) *Node {
 	n := &Node{value, nil, nil, nil, -1}
 	// attach to the existing tree
 	Lut[value] = n
-	if n.value != 0 {
-		n.left, _ = Lut[n.leftValue()]
-		n.right, _ = Lut[n.rightValue()]
-		n.down, _ = Lut[n.downValue()]
-	}
+	n.left, _ = Lut[n.leftValue()]
+	n.right, _ = Lut[n.rightValue()]
+	n.down, _ = Lut[n.downValue()]
 	// add order only if order of down node is known
 	if n.down != nil && n.down.order != -1 {
 		n.order = n.down.order + 1
@@ -70,7 +68,7 @@ func (n *Node) rightValue() int {
 	if ((n.value - 1) % 3) == 0 {
 		return (n.value - 1) / 3
 	} else {
-		return 0
+		return End.value
 	}
 }
 
