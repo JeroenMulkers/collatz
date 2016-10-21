@@ -5,8 +5,8 @@ package collatz
 */
 
 var (
-	One = &Node{1, nil, nil, nil, 0}
-	End = &Node{0, nil, nil, nil, 0}
+	End = &Node{0, nil, nil, nil, -1}
+	One = &Node{1, nil, nil, End, 0}
 	Lut = make(map[int]*Node)
 )
 
